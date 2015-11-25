@@ -1,8 +1,11 @@
+# pings YNAB's download page periodically looking for an invite link to the new YNAB
+
 require "mechanize"
 require "pony"
 
 agent = Mechanize.new
 agent.user_agent_alias = 'Mac FireFox'
+agent.history.max_size = 0 # disable caching
 
 loop do
   page = agent.get "http://www.youneedabudget.com/download"
