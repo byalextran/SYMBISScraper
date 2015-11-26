@@ -1,24 +1,5 @@
 <?php
 
-/* retain social proof for older posts
-** http://soderlind.no/wordpress-hook-into-another-hook/
-***********************************************************************/
-function get_social_permalink($permalink, $post, $leavename) {
-    // only run when get_permalink is called from get_icon_output (within genesis simple share plugin)
-    if (function_exists('wp_debug_backtrace_summary') && stristr(wp_debug_backtrace_summary(), 'get_icon_output') !== FALSE) {
-        $url_change_date = strtotime('04/11/2015'); // use date you changed permalink structure
-        $post_date = strtotime(get_the_date());
-
-        if ($post_date < $url_change_date) {
-            $url_date_prefix = sprintf("/%s/%s/%s", date('Y', $post_date),  date('m', $post_date), date('d', $post_date));
-            $permalink = str_replace(site_url(), site_url() . $url_date_prefix, $permalink);
-        }
-    }
-    return $permalink;
-}
-
-add_filter( 'post_link','get_social_permalink', 20, 3 );
-
 /* make comment links use #disqus_thread
 ** https://thomasgriffin.io/change-comment-link-wordpress/
 ***********************************************************************/
