@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin
+MAILTO=EMAIL
+HOME=/srv/users/serverpilot/
+
+* * * * * ruby /srv/users/serverpilot/code/mini-projects/ynab/ynab-invitecode.rb
