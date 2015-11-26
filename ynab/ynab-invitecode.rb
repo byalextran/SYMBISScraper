@@ -7,16 +7,10 @@ agent = Mechanize.new
 agent.user_agent_alias = 'Mac FireFox'
 agent.history.max_size = 0 # disable caching
 
-loop do
-  page = agent.get "http://www.youneedabudget.com/download"
-  link = page.link_with(:href => /invitationCode/i)
-  # link = page.link_with(:href => /liveCaptive/i)
+page = agent.get "http://www.youneedabudget.com/download"
+link = page.link_with(:href => /invitationCode/i)
+# link = page.link_with(:href => /liveCaptive/i)
 
-  unless link.nil?
-    Pony.mail(:to => "EMAIL", :subject => "invitation link found", :body => link.href)
-    puts link.href
-    break
-  end
-
-  sleep 60
+unless link.nil?
+  Pony.mail(:to => "EMAIL", :subject => "invitation link found", :body => link.href)
 end
