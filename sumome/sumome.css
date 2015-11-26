@@ -1,0 +1,6 @@
+/* removes sumome menu/share icon from free plan */
+body > a { right: -44px !important; }
+.sumome-share-client a:last-child { display: none !important; }
+
+/* centers share menu on mobile */
+.sumome-share-client-wrapper.sumome-share-client-wrapper-mobile-bottom-bar { text-align: center !important; }
