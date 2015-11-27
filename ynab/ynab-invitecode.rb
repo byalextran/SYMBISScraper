@@ -13,4 +13,5 @@ link = page.link_with(:href => /invitationCode/i)
 
 unless link.nil?
   Pony.mail(:to => "EMAIL", :subject => "invitation link found", :body => link.href)
+  `crontab -r`
 end
