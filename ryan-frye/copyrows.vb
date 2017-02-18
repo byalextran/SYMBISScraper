@@ -14,10 +14,13 @@ Sub AlexCopyRows()
   Set DestinationSheet = Worksheets(1)
 
   'loop through all sheets (starting with the second one).
-  'delete any sheets that don't need rows copied.
+  'you should delete any sheets that don't need rows copied.
   For SheetIndex = 2 To Worksheets.Count
     'this is the sheet we're currently processing
     Set CurrentSheet = Worksheets(SheetIndex)
+
+    'output the name of the sheet being copied
+    DestinationSheet.Cells(DestinationRowIndex, 1).Value = CurrentSheet.Name
 
     'loop through all rows in the sheet (starting at row 3 since that's where actual data starts).
     For RowIndex = 3 To CurrentSheet.UsedRange.Rows.Count
