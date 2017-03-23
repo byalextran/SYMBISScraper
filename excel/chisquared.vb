@@ -14,6 +14,33 @@ Public ClickedPValueColumnIndex As Integer
 
 Public CurrentSheet As Worksheet
 
+Sub Initialize()
+  Dim I As Integer
+
+  SentColumnIndex = 4 'D
+  OpenedColumnIndex = 5 'E
+  ClickedColumnIndex = 6 'F
+
+  OpenedSignificantColumnIndex = 11 'K
+  OpenedObservedValuesColumnIndex = 27 'AA
+  OpenedExpectedValuesColumnIndex = 29 'AC
+  OpenedPValueColumnIndex = 31 'AE
+
+  ClickedSignificantColumnIndex = 12 'K
+  ClickedObservedValuesColumnIndex = 33 'AG
+  ClickedExpectedValuesColumnIndex = 35 'AI
+  ClickedPValueColumnIndex = 37 'AK
+
+  Set CurrentSheet = Worksheets(1)
+
+  For I = OpenedSignificantColumnIndex to 50
+    CurrentSheet.Columns(I).ClearContents
+  Next I
+
+  CurrentSheet.Cells(1, OpenedSignificantColumnIndex) = "Open Significance"
+  CurrentSheet.Cells(1, ClickedSignificantColumnIndex) = "Click Significance"
+End Sub
+
 Sub CalculateObservedValues(GoalColumnIndex As Integer, OutputColumnIndex As Integer, StartTestRowIndex As Integer, EndTestRowIndex As Integer)
   Dim I As Integer
   For I = StartTestRowIndex To EndTestRowIndex
@@ -61,35 +88,13 @@ Sub CalculateAndOutputSignificance(ObservedValuesColumnIndex As Integer, Expecte
   End If
 End Sub
 
-Sub CalculateStatisticalSignificanceOpen()
+Sub Main()
   Dim RowIndex As Integer
   Dim StartTestRowIndex As Integer
   Dim EndTestRowIndex As Integer
+  Dim I As Integer
 
-  Dim ClickedPValue As Double
-
-  SentColumnIndex = 4 'D
-  OpenedColumnIndex = 5 'E
-  ClickedColumnIndex = 6 'F
-
-  Set CurrentSheet = Worksheets(1)
-
-  OpenedSignificantColumnIndex = 11 'K
-  OpenedObservedValuesColumnIndex = 27 'AD
-  OpenedExpectedValuesColumnIndex = 30 'AA
-  OpenedPValueColumnIndex = 32 'AC
-
-  ClickedSignificantColumnIndex = 12 'K
-  ClickedObservedValuesColumnIndex = 34 'AE
-  ClickedExpectedValuesColumnIndex = 37 'AH
-  ClickedPValueColumnIndex = 39 'AJ
-
-  CurrentSheet.Columns(OpenedSignificantColumnIndex).ClearContents
-  CurrentSheet.Cells(1, OpenedSignificantColumnIndex) = "Significant Open?"
-
-  CurrentSheet.Columns(ClickedSignificantColumnIndex).ClearContents
-  CurrentSheet.Cells(1, ClickedSignificantColumnIndex) = "Significant Click?"
-
+  Call Initialize()
 
   For RowIndex = 2 To Worksheets(1).UsedRange.Rows.Count
     'a non-empty A-cell means we're starting a new test
@@ -114,8 +119,6 @@ Sub CalculateStatisticalSignificanceOpen()
       Call CalculateObservedValues(ClickedColumnIndex, ClickedObservedValuesColumnIndex, StartTestRowIndex, EndTestRowIndex)
       Call CalculateExpectedValues(ClickedObservedValuesColumnIndex, ClickedExpectedValuesColumnIndex, StartTestRowIndex, EndTestRowIndex)
       Call CalculateAndOutputSignificance(ClickedObservedValuesColumnIndex, ClickedExpectedValuesColumnIndex, ClickedPValueColumnIndex, ClickedSignificantColumnIndex, StartTestRowIndex, EndTestRowIndex)
-
-
     End If
   Next RowIndex
 End Sub
